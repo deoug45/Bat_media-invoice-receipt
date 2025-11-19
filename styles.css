@@ -1,0 +1,134 @@
+:root{
+  --brand:#1fa3d8;
+  --accent:#f76c24;
+  --muted:#666;
+  --paper-bg:#fff;
+  --max-preview-width:820px;
+  --mobile-break:700px;
+  --shadow: 0 6px 20px rgba(18,26,32,0.08);
+  --text: #222;
+}
+
+*{box-sizing:border-box;font-family:Inter, Arial, Helvetica, sans-serif}
+body{margin:0;background:#f4f7fb;color:var(--text);-webkit-font-smoothing:antialiased}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:56px;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#fff;box-shadow:var(--shadow);position:sticky;top:0;z-index:60}
+.brand{font-weight:800;color:var(--accent);letter-spacing:0.6px}
+.burger{width:40px;height:34px;border:0;background:transparent;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:6px;cursor:pointer}
+.burger span{display:block;height:3px;background:#333;border-radius:2px}
+.top-actions .btn{margin-left:8px}
+
+/* overlay to close editor on mobile */
+.overlay{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.35);z-index:45;display:none}
+.overlay.show{display:block}
+
+/* main layout */
+.main{display:flex;gap:12px;padding:12px;align-items:flex-start}
+.editor-panel{width:360px;background:#fff;border-radius:10px;padding:8px;box-shadow:var(--shadow);position:relative;z-index:50}
+.editor-header{display:flex;justify-content:space-between;align-items:center;padding:6px 2px}
+.close{background:transparent;border:0}
+.editor-scroll{max-height:calc(100vh - 140px);overflow:auto;padding-right:6px}
+.preview-area{flex:1;display:flex;justify-content:center;align-items:flex-start}
+.preview-wrapper{max-width:var(--max-preview-width);width:100%}
+
+/* document */
+.document{background:var(--paper-bg);padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06);margin-bottom:18px}
+.doc-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:8px}
+.left-col{width:130px}
+.center-col{flex:1}
+.right-col{width:190px;display:flex;flex-direction:column;align-items:flex-end}
+.company-name{font-weight:800;color:var(--accent);font-size:18px}
+.company-tag{font-weight:700;color:#188242;margin-top:2px}
+.company-address{font-size:13px;color:var(--muted);margin-top:6px}
+
+/* meta column */
+.meta-col{font-size:13px;color:#222}
+
+/* title/meta/bill */
+.title-row{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
+.bill-row{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;color:#222}
+
+/* table */
+.table-card{background:#fff;border:1px solid #e6e9ef;border-radius:10px;overflow:hidden}
+.items{width:100%;border-collapse:collapse}
+.items thead th{background:var(--brand);color:#fff;padding:12px;text-align:left;font-weight:700;font-size:14px}
+.items th, .items td{padding:10px;border-bottom:1px solid #f3f3f7;font-size:13px}
+.items tbody tr:nth-child(even){background:#fbfdff}
+.items td{vertical-align:middle}
+.items td.number{ text-align:right; font-variant-numeric: tabular-nums; }
+
+/* columns sizing */
+.items th.desc{width:48%}
+.items th.qty{width:12%}
+.items th.unit{width:20%}
+.items th.total{width:20%}
+
+/* totals */
+.totals{display:flex;justify-content:space-between;align-items:flex-start;margin-top:12px;gap:12px}
+.words{flex:1;font-weight:700;font-style:italic}
+.totals-boxes{display:flex;flex-direction:column;gap:8px}
+.box{display:flex;justify-content:space-between;padding:8px;border:1px solid #e2e6ef;border-radius:6px;background:#fff;min-width:200px}
+
+/* footer with QR and thank you centered; signature & logo left (mobile-only) */
+.doc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px}
+.footer-left{display:none;flex-direction:column;gap:6px;align-items:flex-start}
+.logo-placeholder{font-weight:800;color:var(--accent);background:#fff;padding:6px 8px;border-radius:6px;border:1px solid #eee}
+.signature-details .sig-caption{font-size:12px;color:var(--muted)}
+.sig-preview img{max-height:56px;max-width:160px;object-fit:contain}
+.footer-center{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.qr{width:92px;height:92px;border:1px solid #eee;border-radius:8px;background:#fff}
+.thankyou{font-size:13px;color:var(--muted);text-align:center}
+
+/* editors & controls */
+label{display:block;margin:10px 0 6px;font-size:13px}
+input[type="text"], input[type="number"], input[type="date"], textarea{width:100%;padding:8px;border:1px solid #e0e4ea;border-radius:6px;font-size:14px}
+textarea{min-height:56px}
+.editor-table{width:100%;border-collapse:collapse;margin-bottom:8px}
+.editor-table thead th{font-size:13px;text-align:left;padding:8px}
+.editor-table td, .editor-table th{padding:6px;border-bottom:1px dashed #f2f4f7}
+.editor-table input{width:100%;padding:6px;border:1px solid #ccc;border-radius:4px}
+.editor-controls{display:flex;gap:8px;margin-bottom:8px}
+.editor-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.btn{padding:8px 10px;border-radius:8px;border:1px solid #d0d6df;background:#fff;cursor:pointer}
+.btn.primary{background:var(--brand);color:#fff;border-color:transparent}
+.btn.subtle{background:transparent;border:1px dashed #e0e4ea;color:#666}
+
+/* number controls (plus/minus) - hidden by default, shown on mobile via media query */
+.num-controls{display:none;gap:6px;align-items:center}
+.num-controls button{width:32px;height:28px;padding:0;border-radius:6px;border:1px solid #d0d6df;background:#fff}
+
+/* history */
+.history-list{max-height:220px;overflow:auto;border-top:1px dashed #eee;padding-top:8px}
+.history-item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid #f6f7fb}
+
+/* sales */
+.sales-by-day{margin-top:12px}
+.sales-day{border:1px solid #eef2f7;border-radius:8px;padding:10px;margin-bottom:8px}
+.sales-entry{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed #f3f6fa}
+
+/* modal preview */
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:120}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:10px;padding:12px;max-width:95%;max-height:92%;display:flex;flex-direction:column;gap:8px;align-items:center}
+.modal-content img{max-width:100%;max-height:72vh;border:1px solid #eee;border-radius:6px}
+.modal-close{align-self:flex-end;background:transparent;border:0;font-size:18px}
+.modal-actions{display:flex;gap:8px}
+
+/* toast */
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:#111;color:#fff;padding:8px 12px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1;pointer-events:auto}
+
+/* keep native number spinners (allow typing and up/down). No global hiding here. */
+/* show mobile-only elements */
+@media (max-width: 700px){
+  .mobile-only{display:inline-block}
+  .editor-panel{position:fixed;left:0;top:56px;width:100%;height:calc(100vh - 56px);transform:translateY(-120%);transition:transform .28s;z-index:80;border-radius:0}
+  .editor-panel.open{transform:translateY(0)}
+  .preview-wrapper{padding:10px}
+  .overlay{display:none}
+  .overlay.show{display:block}
+  .footer-left{display:flex}
+  .num-controls{display:flex}
+  /* show preview button only on mobile */
+  #previewBtn{display:inline-block}
+}
