@@ -75,7 +75,58 @@
 
     <div id="toast" class="toast" aria-live="polite"></div>
   </div>
+<script>
+    // register-sw.js - registers the service worker and handles beforeinstallprompt
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('/service-worker.js');
+      console.log('Service worker registered:', reg);
 
+      // Optional: notify user when an update is waiting
+      if (reg.waiting) {
+        console.log('Service worker update waiting. Consider showing an "Update" UI.');
+      }
+
+      // Listen for updates and prompt user to refresh
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('New service worker controlling the page.');
+      });
+
+      // beforeinstallprompt handling for customized install button
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e; // Save the event for user-initiated install
+        const installBtn = document.getElementById('pwa-install-btn');
+        if (installBtn) {
+          installBtn.style.display = 'inline-block';
+          installBtn.addEventListener('click', async () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            const choice = await deferredPrompt.userChoice;
+            console.log('User install choice:', choice);
+            deferredPrompt = null;
+          });
+        }
+      });
+
+      // Optional: provide a way to activate a waiting SW immediately
+      const updateBtn = document.getElementById('pwa-update-btn');
+      if (updateBtn) {
+        updateBtn.addEventListener('click', async () => {
+          if (reg.waiting) {
+            reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+      }
+
+    } catch (err) {
+      console.error('Service worker registration failed:', err);
+    }
+  });
+}
+</script>
   <script src="script.js"></script>
 </body>
 </html>
