@@ -1,41 +1,42 @@
 ```markdown
-# PWA files for Bat Media (what I added and how to use them)
+# BAT_MEDIA — Invoice & Receipt PWA
 
-What I added
-- service-worker.js — improved caching & offline handling.
-- register-sw.js — registration and install/update UI hooks.
-- manifest.json — ready-to-edit PWA manifest.
-- offline.html — offline fallback page.
+What this package contains
+- index.html — main app UI (responsive, mobile-first)
+- styles.css — all styling and responsive rules
+- script.js — app logic: editor, preview, export, history, PWA install prompt
+- manifest.json — PWA manifest (standalone)
+- service-worker.js — basic service worker for caching
+- README.md — this file
 
-Where to place files
-- Put service-worker.js and offline.html at your site root (so scope is '/').
-- Put manifest.json at site root and update <link rel="manifest" href="/manifest.json"> in your <head>.
-- Place register-sw.js in your assets and include it before </body>:
-  <script src="/register-sw.js"></script>
+Images you must add
+- BAT LOGO.png — your logo (place in project root)
+- bat signature.png — signature image (place in project root)
+- icon-192.png and icon-512.png — app icons used by manifest and install (place in project root).
+  If you don't have icons, create 192x192 and 512x512 PNGs from your logo.
 
-Icons
-- Provide /icon-192.png and /icon-512.png at site root (or update paths in manifest and precache).
+How to run locally
+1. Place all files in a single folder and add the PNGs above.
+2. Serve the folder over HTTPS (or use `npx http-server -c-1` for local testing on localhost).
+3. Open the site in Chrome (Android or Desktop). On first loads Chrome will register the service worker.
+4. On Android Chrome the browser will show an install prompt OR the in-page install prompt will appear
+   (the in-page "Install" button is shown only when `beforeinstallprompt` is fired).
+5. Use the Editor to edit company fields and items. Click Preview to see the exact A4 rendering. Use Download PNG/PDF to export documents.
 
-Testing locally
-1. Serve your site over HTTPS. For local dev, Chrome allows service workers on http://localhost.
-2. Open DevTools > Application:
-   - Check 'Service Workers' to confirm registration.
-   - Inspect Cache Storage to see the precache and runtime caches.
-3. Simulate offline: DevTools > Network > Offline. Reload a navigated page to see offline.html served.
+Export size tips
+- Default PNG DPI = 200 (good balance between size & quality). Use 300 DPI when you need maximum print sharpness.
+- PDF is built by embedding a JPEG of the rendered canvas. The "PDF Image Quality" slider controls JPEG quality (0.6..0.95). Lower quality reduces file size.
+- Aim for ~200 DPI + PDF quality 0.85 for typical 1–2MB PDFs.
 
-Updating / releasing a new service worker
-- Bump CACHE_VERSION in service-worker.js (e.g., v3) and deploy.
-- The new SW will install and wait. You can show an "Update" button that sends SKIP_WAITING to the SW (see register-sw.js).
-- After activating, refresh clients or prompt users to reload.
+PWA notes
+- The app must be served via HTTPS for install and service worker to work.
+- The manifest and icons must be present for the browser to show a proper install UI.
+- This project is a PWA (not an APK). If later you want a Play Store APK, I can prepare a Trusted Web Activity (TWA) package using Bubblewrap.
 
-Notes & recommendations
-- Keep large vendor libraries out of precache if you don't need them immediately offline; rely on runtime stale-while-revalidate to reduce deploy size.
-- Monitor your cache usage (Quota and DevTools) on target devices.
-- For Play Store or other packaging later, you can use Bubblewrap / TWA; for web install, this is all you need.
+Support
+If you'd like I can:
+- Generate icon-192.png and icon-512.png from your logo and embed them.
+- Tune default DPI/quality to hit a specific PDF size target (e.g., 1.5MB).
+- Produce a Bubblewrap project for a Play Store APK.
 
-Security
-- Do NOT cache private API responses or pages that contain user-sensitive data.
-- Only precache static app shell assets.
-
-If you want me to add these files to your repo as a new branch and open a PR, tell me the branch name and whether to place files at the repository root or a subfolder (e.g., /public).
 ```
